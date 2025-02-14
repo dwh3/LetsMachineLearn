@@ -25,7 +25,7 @@ jobs:
           conda install -c conda-forge jupyter-book  # Install JupyterBook
 
       - name: Build JupyterBook
-        run: jupyter-book build mybook  # Replace mybook with your book directory
+        run: jupyter-book build LetsMachineLearn
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
