@@ -14,16 +14,26 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Miniconda
-        uses: conda-incubator/setup-miniconda@v3 # Use v3
+        uses: conda-incubator/setup-miniconda@v3
         with:
           activate-environment: my-jupyterbook-env
-          environment-file: environment.yml # Use the environment.yml file
+          environment-file: environment.yml
           python-version: "3.9"
           auto-update-conda: true
           auto-activate-base: false
 
+      - name: Verify Installation
+        shell: bash -l {0}  # Use login shell for activation
+        run: |
+          conda activate my-jupyterbook-env
+          conda list
+          which jupyter-book
+
       - name: Build JupyterBook
-        run: jupyter-book build .  #  Add the dot to specify the current directory
+        shell: bash -l {0} # Use login shell for activation
+        run: |
+          conda activate my-jupyterbook-env
+          jupyter-book build .
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
