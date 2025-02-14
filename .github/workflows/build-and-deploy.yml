@@ -25,7 +25,7 @@ jobs:
           conda install -c conda-forge jupyter-book
 
       - name: Build JupyterBook
-<<<<<<< Updated upstream:.github/build-and-deploy.yml
+<<<<<<< Updated upstream:.github/workflows/build-and-deploy.yml
         run: jupyter-book build LetsMachineLearn
 =======
         run: jupyter-book build  # Corrected
