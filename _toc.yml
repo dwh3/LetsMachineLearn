@@ -4,6 +4,7 @@ root: intro
 parts:
   - caption: Lectures
     chapters:
+      - file: lectures/List_of_Upcoming_Lectures.md
       - file: lectures/ols_derivation
       - file: lectures/logistic_regression
 
