@@ -1,0 +1,1219 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Assumptions in OLS &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/ols_derivation';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Logistic Regression" href="logistic_regression.html" />
+    <link rel="prev" title="R&amp;A Landing Page" href="../intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">My sample book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    R&A Landing Page
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Assumptions in OLS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logistic_regression.html">Logistic Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../projects/project1_overview.html">Project X: We Can Document Projects as Web Pages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Paper Discussions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../papers/bert_discussion.html">Discussion: BERT - Pre-training of Deep Bidirectional Transformers for Language Understanding</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/dwh3/LetsMachineLearn" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/dwh3/LetsMachineLearn/issues/new?title=Issue%20on%20page%20%2Flectures/ols_derivation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/ols_derivation.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Assumptions in OLS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deriving-ols">Deriving OLS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-multiplication">Matrix multiplication</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensions-of-matrices-in-matrix-multiplication">Dimensions of Matrices in Matrix Multiplication</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inverse-rules">Inverse Rules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-processes">Stochastic processes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-terms-are-distributed-normally">Error terms are distributed normally</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#remaining">Remaining</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="assumptions-in-ols">
+<h1>Assumptions in OLS<a class="headerlink" href="#assumptions-in-ols" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Number of observations greater than number of predictors</p></li>
+<li><p>Each observation is unique.</p></li>
+<li><p>No multicollinearity (we talked about this with VIF)</p></li>
+<li><p>Linear model</p></li>
+<li><p>Homoskedastiity of residuals or equal variances</p></li>
+<li><p>Errors are distributed normally</p></li>
+</ul>
+<section id="deriving-ols">
+<h2>Deriving OLS<a class="headerlink" href="#deriving-ols" title="Link to this heading">#</a></h2>
+<p>In understanding the assumptions of linear regressions, we can start witht the derivation of OLS (the equation of linear regressions). Linear regressions are ultimately just algebra. In algebra, a big part of it was understanding how <span class="math notranslate nohighlight">\(x\)</span> influences <span class="math notranslate nohighlight">\(y\)</span>. This is what we would find when finding the slope of a line.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>matplotlib
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Define the data</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">slope</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">intercept</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">intercept</span> <span class="o">+</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">x</span>
+
+<span class="c1"># Define the points (x1, y1) and (x2, y2)</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">x1</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">x2</span>
+
+<span class="c1"># Create the plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">],</span> <span class="p">[</span><span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>  <span class="c1"># &#39;ro&#39; for red circles</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">],</span> <span class="p">[</span><span class="n">y1</span><span class="p">,</span> <span class="n">y1</span><span class="p">],</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># Dashed red line</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x2</span><span class="p">,</span> <span class="n">x2</span><span class="p">],</span> <span class="p">[</span><span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">],</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Annotations (using LaTeX for delta)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">((</span><span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">y1</span> <span class="o">-</span> <span class="mf">1.5</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\Delta x$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x2</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="p">(</span><span class="n">y1</span> <span class="o">+</span> <span class="n">y2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\Delta y$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$(x_1, y_1)$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>  <span class="c1"># ha=&#39;right&#39; for horizontal alignment</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$(x_2, y_2)$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Slope of a Line&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">slope</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0a7f64aa5f9adc86d3930e8d47c5811c65ad1421f56cb178e0bf5901c29ab411.png" src="../_images/0a7f64aa5f9adc86d3930e8d47c5811c65ad1421f56cb178e0bf5901c29ab411.png" />
+</div>
+</div>
+<p>Here we can see how y changes (varies) as x changes (varies). This is what we called the slope:</p>
+<div class="math notranslate nohighlight">
+\[\beta=\frac{\Delta y}{\Delta x}\]</div>
+<p>But how can we actually use this? Well, let’s consider a case where we have a claim where the only thing that affects their cost is how many times they fill a certain prescription.</p>
+<div class="math notranslate nohighlight">
+\[total \: cost=\frac{cost}{fill}\cdot fills\]</div>
+<p>This would mean that even if we did not know the price of the drug, we could figure it out, even if we only had the total cost and total number of fills.</p>
+<div class="math notranslate nohighlight">
+\[total \: cost=\frac{cost}{fills}\cdot fills\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{total \: cost}{fills}=\frac{cost}{fill}\]</div>
+<p>Which with actual numbers would mean:</p>
+<div class="math notranslate nohighlight">
+\[80=\frac{cost}{fills}\cdot 4\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{80}{4}=20=\frac{cost}{fill}\]</div>
+<p>But we know many thinsg can influence an outcome. So if that person had two prescriptions, then:</p>
+<div class="math notranslate nohighlight">
+\[total \: cost=\frac{cost_1}{fill_1}\cdot fills_1+\frac{cost_2}{fill_2}\cdot fills_2\]</div>
+<p>To simplify the language here, we can use the slope notation that we had before, so <span class="math notranslate nohighlight">\(\frac{cost_1}{fill_1}=\beta_1\)</span>, etc. making:</p>
+<div class="math notranslate nohighlight">
+\[total \: cost=\beta_1 \cdot fills_1+\beta_2 \cdot fills_2\]</div>
+<p>So we can go back to our example and try to solve it. Let’s say we have</p>
+<div class="math notranslate nohighlight">
+\[100=4\beta_1+1 \beta_2\]</div>
+<p>What happens if we try to solve for each price? We could write:</p>
+<div class="math notranslate nohighlight">
+\[\beta_2=100-4\beta_1\]</div>
+<p>But we cannot get actual values here. That is because we have more unknowns than we have equations. This goes to the first assumption of <strong>Number of observations greater than number of predictors</strong>.</p>
+<p>That means that if we have two drugs we would like to find the price of, given their prescription counts and total dollars,  we would need at least two different observations for them to figure out their costs. But what if we only have the following two equations.</p>
+<div class="math notranslate nohighlight">
+\[100=4\beta_1+1 \beta_2\]</div>
+<div class="math notranslate nohighlight">
+\[100=4\beta_1+1 \beta_2\]</div>
+<p>Well technically we have two equations, but the second equation does not give us any information that was not already in the first equation. So we don’t need just as many equations as we have unknowns, we need at least as many unique equations as we have unknowns. <strong>This is one of the things that makes our second rule of “Each observation is unique.</strong> <strong>This is also related to our assumption that there is no multicollinearity, but that is more rigorous of a proof, and understanding VIF is more than sufficient for understanding why.</strong></p>
+<p>So instead, we can look at their bill in June and July and see:</p>
+<div class="math notranslate nohighlight">
+\[100=4\beta_1+1 \beta_2\]</div>
+<div class="math notranslate nohighlight">
+\[120=4\beta_1+2 \beta_2\]</div>
+<p>So we know we would need to solve one equation to get one variable in terms of the other</p>
+<div class="math notranslate nohighlight">
+\[\beta_2=100-4\beta_1\]</div>
+<p>, and then plug that into the other equation…..</p>
+<div class="math notranslate nohighlight">
+\[120=4\beta_1+2(100-4\beta_1)\]</div>
+<div class="math notranslate nohighlight">
+\[120=4\beta_1+200-8\beta_1\]</div>
+<div class="math notranslate nohighlight">
+\[4\beta_1=80\]</div>
+<div class="math notranslate nohighlight">
+\[\beta_1=20\]</div>
+<p>Which we plug back into the original equation to get:</p>
+<div class="math notranslate nohighlight">
+\[\beta_2=100-4\beta_1=100-4(20)=20\]</div>
+<p>So with 1 equation and 1 unknown, it was 1 step. With 2 equations and 2 unknowns, we get many more steps. This continues exponentially as we add more equations and more unknowns. <strong>So what can we do?</strong></p>
+<p>To figure that out, we can revisit the case with one variable. We said if we want to know the slope, we would do:</p>
+<div class="math notranslate nohighlight">
+\[y=x \beta\]</div>
+<div class="math notranslate nohighlight">
+\[\beta=\frac{y}{x}\]</div>
+<p>But this skips some steps. We actually divide each side by x:</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{x}\beta x=y\frac{1}{x}\]</div>
+<p>But dividing by a number is the same as multiplying by that number to the negative 1 power, meaning:</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{x}\beta x=y\frac{1}{x} \implies x^{-1}\beta x=x^{-1}y\]</div>
+<p>This gives <span class="math notranslate nohighlight">\(\beta=x^{-1}y\)</span> since <strong><span class="math notranslate nohighlight">\(x^{-1}x=1\)</span></strong>.</p>
+<p>So how does that helps us? Well we are actually able to write out multiple equations in a way that can do that, which means we can write our equations:</p>
+<div class="math notranslate nohighlight">
+\[100=4\beta_1+1 \beta_2\]</div>
+<div class="math notranslate nohighlight">
+\[120=4\beta_1+2 \beta_2\]</div>
+<p>can be written in matrix notation as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\overset{y}{\begin{bmatrix}
+    100 \\
+    120
+\end{bmatrix}}
+=
+\overset{X}{\begin{bmatrix}
+    1 &amp; 4  \\
+    2 &amp; 4
+\end{bmatrix}}
+\overset{\beta}{\begin{bmatrix}
+    \beta_1 \\
+    \beta_2
+\end{bmatrix}}
+\end{split}\]</div>
+<p>So now whether we have 1 equation and 1 unknown, or 50 equations and 50 unknowns, we can write them as:</p>
+<p><span class="math notranslate nohighlight">\(\beta=x^{-1}y\)</span></p>
+<p><strong>This is what is meant in the assumption of “Linear Model”, that the expression can be written as a linear system of equations.</strong></p>
+</section>
+<section id="matrix-multiplication">
+<h2>Matrix multiplication<a class="headerlink" href="#matrix-multiplication" title="Link to this heading">#</a></h2>
+<p>But let’s look at our matrix. Since we said:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+    &amp;\begin{aligned}
+        100 &amp;= 4\beta_1 + 1\beta_2 \\
+        120 &amp;= 4\beta_1 + 2\beta_2
+    \end{aligned}
+    &amp; \implies
+    &amp; \begin{bmatrix}
+        100 \\
+        120
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        4 &amp; 1 \\
+        4 &amp; 2
+    \end{bmatrix}
+    \begin{bmatrix}
+        \beta_1 \\
+        \beta_2
+    \end{bmatrix}
+\end{aligned}
+\end{split}\]</div>
+<p><strong>This is where the explanation starts to get a little too loose. Tighten it up a bit</strong></p>
+<p>This means that we do a dot product where each row of <span class="math notranslate nohighlight">\(x\)</span> has a dot product with the column of B.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+    &amp;\begin{aligned}
+        100 &amp;= 4\beta_1 + 1\beta_2 \\
+        120 &amp;= 4\beta_1 + 2\beta_2
+    \end{aligned}
+    &amp; \implies
+    &amp; \begin{bmatrix}
+        \color{red}{100} \\
+        120
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \color{blue}{4} &amp; \color{blue}{1} \\
+        4 &amp; 2
+    \end{bmatrix}
+    \begin{bmatrix}
+        \color{green}{\beta_1} \\
+        \color{green}{\beta_2}
+    \end{bmatrix}
+\end{aligned}
+\end{split}\]</div>
+<p>Below, we highlight the matrix multiplication step-by-step:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+    \color{red}{100} \\
+    120
+\end{bmatrix}
+=
+\begin{bmatrix}
+    \color{blue}{4} &amp; \color{blue}{1} \\
+    4 &amp; 2
+\end{bmatrix}
+\begin{bmatrix}
+    \color{green}{\beta_1} \\
+    \color{green}{\beta_2}
+\end{bmatrix}
+\end{split}\]</div>
+<p>Here, <span style="color:red;">100</span> is the dot product of the first row of <span style="color:blue;">X = [4, 1]</span> and the column of <span style="color:green;">β = [β<sub>1</sub>, β<sub>2</sub>]</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\color{red}{100} = \color{blue}{4} \cdot \color{green}{\beta_1} + \color{blue}{1} \cdot \color{green}{\beta_2}
+\]</div>
+<p>Likewise, (\color{red}{120}) is the dot product of the second row of <span style="color:blue;">X = [4, 2]</span> and the column of <span style="color:green;">β = [β<sub>1</sub>, β<sub>2</sub>]</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\color{red}{120} = \color{blue}{4} \cdot \color{green}{\beta_1} + \color{blue}{2} \cdot \color{green}{\beta_2}
+\]</div>
+<p>This means to be able to do matrix multiplication, we need the same number of columns in <span class="math notranslate nohighlight">\(X\)</span> as rows in <span class="math notranslate nohighlight">\(\beta\)</span>. We write the dimensions of a matrix like so:</p>
+<p>To perform matrix multiplication, the number of columns in matrix <span class="math notranslate nohighlight">\(X\)</span> must be equal to the number of rows in vector <span class="math notranslate nohighlight">\(\beta\)</span>. This requirement ensures that each element in the resulting product is a sum of products, calculated by taking the dot product of rows from <span class="math notranslate nohighlight">\(X\)</span> with columns from <span class="math notranslate nohighlight">\(\beta\)</span>.</p>
+<p>We write the dimensions of a matrix as follows:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(X\)</span> is an <span class="math notranslate nohighlight">\(n \times k\)</span> matrix, where <span class="math notranslate nohighlight">\(n\)</span> is the number of observations (rows) and <span class="math notranslate nohighlight">\(k\)</span> is the number of predictors including the intercept term (columns).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta\)</span> is a <span class="math notranslate nohighlight">\(k \times 1\)</span> vector.</p></li>
+<li><p>The resulting product <span class="math notranslate nohighlight">\(y\)</span> is an <span class="math notranslate nohighlight">\(n \times 1\)</span> vector.</p></li>
+</ul>
+<p>Here’s how we denote the dimensions:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+    y_1 \\
+    y_2 \\
+    \vdots \\
+    y_n
+\end{bmatrix}_{n \times 1}
+=
+\begin{bmatrix}
+    x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1k} \\
+    x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2k} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nk}
+\end{bmatrix}_{n \times k}
+\begin{bmatrix}
+    \beta_1 \\
+    \beta_2 \\
+    \vdots \\
+    \beta_k
+\end{bmatrix}_{k \times 1}
+\end{split}\]</div>
+<section id="dimensions-of-matrices-in-matrix-multiplication">
+<h3>Dimensions of Matrices in Matrix Multiplication<a class="headerlink" href="#dimensions-of-matrices-in-matrix-multiplication" title="Link to this heading">#</a></h3>
+<p>In matrix algebra, the order of multiplication matters. Specifically, the number of columns in <span class="math notranslate nohighlight">\(X\)</span> must equal the number of rows in <span class="math notranslate nohighlight">\(\beta\)</span>. We can visualize this by writting the dimensions, such as <span class="math notranslate nohighlight">\(X\)</span> which has <span class="math notranslate nohighlight">\(n\)</span> rows, and <span class="math notranslate nohighlight">\(k\)</span> columns as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{c}
+ &amp; X  \\
+&amp; \left[ n \times k \right]\\
+\end{array}
+\end{split}\]</div>
+<p>And since the number of columns in <span class="math notranslate nohighlight">\(X\)</span> must equal the number of rows in <span class="math notranslate nohighlight">\(\beta\)</span>, that means that when we write an equation, the inner dimensions much match. And the result takes the outter dimensions.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{cccc}
+\ &amp; y &amp; = &amp; X \beta \\
+&amp; \left[ \color{red}{n} \times \color{red}{1} \right] &amp; &amp; \left[ \color{red}{n} \times \color{blue}{k} \right] \cdot \left[ \color{blue}{k} \times \color{red}{1} \right] \\
+\end{array}
+\end{split}\]</div>
+</section>
+</section>
+<section id="inverse-rules">
+<h2>Inverse Rules<a class="headerlink" href="#inverse-rules" title="Link to this heading">#</a></h2>
+<p>So the equation <span class="math notranslate nohighlight">\(\beta=\frac{y}{x}\)</span> again skips steps. The steps are actually</p>
+<p>We said that <span class="math notranslate nohighlight">\(x^{-1}x=1\)</span>. The term <span class="math notranslate nohighlight">\(x^{-1}\)</span> is known as the inverse of <span class="math notranslate nohighlight">\(x\)</span>. We won’t get into why, but the inverse of a matrix is only defined is that matrix is square. Which means if <span class="math notranslate nohighlight">\(x\)</span> has the following dimensions:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{c}
+ &amp; X  \\
+&amp; \left[ n \times k \right]\\
+\end{array}
+\end{split}\]</div>
+<p>Then <span class="math notranslate nohighlight">\(n\)</span> needs to equal <span class="math notranslate nohighlight">\(k\)</span> to be invertible.</p>
+<p>So why do we care about that? Well if we think about our data, we could have 1,000,000 observations, and only 50 things that effect our cost. This would mean that our matrix of coefficients would be:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{c}
+ &amp; X  \\
+&amp; \left[ 1,000,000 \times 50 \right]\\
+\end{array}
+\end{split}\]</div>
+<p>And here <span class="math notranslate nohighlight">\(n \neq k\)</span>, which means there is no such thing as <span class="math notranslate nohighlight">\(x^{-1}\)</span>. So what can we do?</p>
+<p>Well let’s go back to the drawing board. Let’s think of the something like:</p>
+<div class="math notranslate nohighlight">
+\[4x=8\]</div>
+<p>We said before that we would multiply by the inverse of 4 to solve this:</p>
+<div class="math notranslate nohighlight">
+\[(4)^{-1}4x=(4)^{-1}8 \implies 1x=(4)^{-1}8\]</div>
+<p>But 4 can be decomposed. So instead we could write:</p>
+<div class="math notranslate nohighlight">
+\[4x=8 \implies (2 \times 2)x=8\]</div>
+<p>Then our inverse would be:</p>
+<div class="math notranslate nohighlight">
+\[(2 \times 2)x=8 \implies (2 \times 2)^{-1}(2 \times 2)x=(2 \times 2)^{-1}8 \implies 1x=(2 \times 2)^{-1}8\]</div>
+<p>So how does that help us? Well it tips us off that we can modify our equation to give us something that is invertible. Lucky for us there is an operation known as the transpose, which we would write the transpose of <span class="math notranslate nohighlight">\(x\)</span> as <span class="math notranslate nohighlight">\(x'\)</span>, which takes the rows of the initial Matrix, and turns them into the columns of the transpose. This would mean if we had:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{c}
+ &amp; X  \\
+&amp; \left[ 1,000,000 \times 50 \right]\\
+\end{array}
+\end{split}\]</div>
+<p>Then</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{c}
+ &amp; X'  \\
+&amp; \left[ 50 \times 1,000,000 \right]\\
+\end{array}
+\end{split}\]</div>
+<p>So why would we care about this? Well if we multiply them, the result would be square:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{ccc}
+ &amp; X' X \\
+ &amp; \left[ 50 \times 50 \right] \\
+\end{array}
+\end{split}\]</div>
+<p>This is necessary to be able to invert this. So now to solve for our prices, given that we have more observations than unknowns, we would do:</p>
+<div class="math notranslate nohighlight">
+\[y=x \beta\]</div>
+<div class="math notranslate nohighlight">
+\[x'y=x'x \beta\]</div>
+<div class="math notranslate nohighlight">
+\[(x'x)^{-1}x'y=(x'x)^{-1}x'x \beta\]</div>
+<div class="math notranslate nohighlight">
+\[(x'x)^{-1}x'y=\beta\]</div>
+<p><strong>This is OLS…..linear regression</strong></p>
+</section>
+<section id="stochastic-processes">
+<h2>Stochastic processes<a class="headerlink" href="#stochastic-processes" title="Link to this heading">#</a></h2>
+<p>But in the real world, there will always be some noise in our data. So instead of the world being generated by:</p>
+<div class="math notranslate nohighlight">
+\[y=x \beta\]</div>
+<p>We have some noise, which we call the error term:</p>
+<div class="math notranslate nohighlight">
+\[y=x \beta + \epsilon\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Set seed for reproducibility (equivalent to set.seed(1) in R)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># number of observations</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># Explanatory/Independent Variable (randn for standard normal)</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># Error term</span>
+
+<span class="n">beta0</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># Intercept parameter</span>
+<span class="n">beta1</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Slope Parameter</span>
+
+<span class="c1"># Linear model</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">beta0</span> <span class="o">+</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">epsilon</span>
+
+<span class="c1"># Data frame (using pandas for consistency with common Python data analysis)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">})</span>
+
+<span class="c1"># Graph (using matplotlib, with seaborn-style theme for aesthetics)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span> <span class="c1">#figsize is optional</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># s controls point size, can be removed</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="c1">#No need for latex here</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Scatter Plot of x vs y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0b58cec45bfdd538392d1f69d7b5ab29ba2a43abe0e72f0f0fa4d8c9bd960782.png" src="../_images/0b58cec45bfdd538392d1f69d7b5ab29ba2a43abe0e72f0f0fa4d8c9bd960782.png" />
+</div>
+</div>
+<p>So when we run OLS, we would actually only be able to guess the value of <span class="math notranslate nohighlight">\(\beta\)</span>, which we call our estimate:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}=(x'x)^{-1}x'y\]</div>
+<p>But what about <span class="math notranslate nohighlight">\(\epsilon\)</span>? Well this relates to the conditions that make OLS BLUE.</p>
+<p>If we use the OLS form from before, we get:</p>
+<div class="math notranslate nohighlight">
+\[y=x \beta + \epsilon\]</div>
+<div class="math notranslate nohighlight">
+\[y - \epsilon= x \beta \]</div>
+<div class="math notranslate nohighlight">
+\[x'(y - \epsilon)= x'x \beta \]</div>
+<div class="math notranslate nohighlight">
+\[x'y - x'\epsilon= x'x \beta \]</div>
+<div class="math notranslate nohighlight">
+\[(x'x)^{-1}(x'y - x'\epsilon)= (x'x)^{-1}x'x \beta \]</div>
+<div class="math notranslate nohighlight">
+\[(x'x)^{-1}(x'y - x'\epsilon)= \hat{\beta} \]</div>
+<p>We still see the <span class="math notranslate nohighlight">\(\epsilon\)</span> here. But let’s look at another property of matrices, which is orthogonality. A vector can represent a list of numbers, such as a list of the total dollars spent on a claim. For example, consider the vector:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{v} = \begin{bmatrix}
+500 \\
+750 \\
+200 \\
+450 \\
+300
+\end{bmatrix}
+\end{split}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> represents the total dollars spent on five different claims.</p>
+<p>But it can also mean direction in a certain dimension such as a two dimensional vector can represent the direction of a line in the x and y directions.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{v} = \begin{bmatrix}
+x-direction \\
+y-direction
+\end{bmatrix}
+\end{split}\]</div>
+<p>So how is that relevant? Well let’s consider the following two lines</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Create the vectors</span>
+<span class="n">vector_x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">vector_y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Create the data frame for the vectors</span>
+<span class="n">vectors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="s1">&#39;xend&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">vector_x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vector_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+    <span class="s1">&#39;yend&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">vector_x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vector_y</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Vector 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Vector 2&quot;</span><span class="p">],</span>
+    <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="c1"># Create the plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="c1"># Use a loop to plot each vector, to handle the arrow and color correctly</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">vectors</span><span class="p">[</span><span class="s1">&#39;xend&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">vectors</span><span class="p">[</span><span class="s1">&#39;yend&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]),</span>
+                <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">vectors</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">vectors</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]),</span>
+                <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">vectors</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="c1">#linewidth for arrow size</span>
+                <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">vectors</span><span class="p">[</span><span class="s1">&#39;xend&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">vectors</span><span class="p">[</span><span class="s1">&#39;yend&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">vectors</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span> <span class="c1">#va and ha for text positioning</span>
+
+
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>  <span class="c1"># Horizontal line</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>  <span class="c1"># Vertical line</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Orthogonal Vectors&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;X direction&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Y direction&quot;</span><span class="p">)</span>
+
+<span class="c1"># Remove grid lines (equivalent to theme(panel.grid = element_blank()))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># Good practice to remove the axis spines as well, for a cleaner &quot;minimal&quot; look</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># ax.spines[&#39;bottom&#39;].set_visible(False) # Optionally keep bottom/left</span>
+<span class="c1"># ax.spines[&#39;left&#39;].set_visible(False)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/13bcc38ae4bb33253f0410790cb45da0daa508ca895ed8f51f1b006c35a02af3.png" src="../_images/13bcc38ae4bb33253f0410790cb45da0daa508ca895ed8f51f1b006c35a02af3.png" />
+</div>
+</div>
+<p>Here, we see that a change in the first vector is not associated with a change in the second vector. In fact, you could move as far as you would like in the y-direction, and it never changes your location in the x direction. So the variance of one vector is not correlated with the variance in the other vector. So we can see that intuitively, but what does that mean in terms of math? Well vector one is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{v_1} = \begin{bmatrix}
+1 \\
+0
+\end{bmatrix}
+\end{split}\]</div>
+<p>And the other is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{v_2} = \begin{bmatrix}
+0 \\
+1
+\end{bmatrix}
+\end{split}\]</div>
+<p>To find the dot product of these two vectors, we multiply corresponding entries and sum the results:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{v_1} \cdot \mathbf{v_2} = \begin{bmatrix}
+1 \\
+0
+\end{bmatrix} \cdot \begin{bmatrix}
+0 \\
+1
+\end{bmatrix}
+= (1 \times 0) + (0 \times 1) = 0 + 0 = 0
+\end{split}\]</div>
+<p>Since the dot product is zero, this confirms that the vectors are orthogonal. In mathematical terms, orthogonal vectors have a dot product of zero, which means they are perpendicular to each other in the vector space.</p>
+<p>This means that if variance in one variable is uncorrelated with variance in other variable, then the dot product is 0. So how does that help us? Well going back to our equation.</p>
+<div class="math notranslate nohighlight">
+\[(x'x){-1}(x'y - x'\epsilon)= \hat{\beta} \]</div>
+<p>If our the variance of our input is not correlated with our errors, that would mean that <span class="math notranslate nohighlight">\(x\)</span> is orthogonal with <span class="math notranslate nohighlight">\(\epsilon\)</span>, which means that <span class="math notranslate nohighlight">\(x'\epsilon=0\)</span>, which means that:</p>
+<div class="math notranslate nohighlight">
+\[(x'x){-1}(x'y - x'\epsilon)= \hat{\beta} \implies (x'x){-1}(x'y - 0)= \hat{\beta}  \implies (x'x){-1}x'y= \hat{\beta}  \]</div>
+<p>And and since we said that without any error terms that the true causal influence is:</p>
+<div class="math notranslate nohighlight">
+\[(x'x)^{-1}x'y=\beta\]</div>
+<p>And</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}=(x'x){-1}x'y\]</div>
+<p>This means that if x and epsilon are uncorrelated, then our estimate equals the actual  value:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}=\beta=(x'x){-1}x'y\]</div>
+<p><strong>This is where our assumption of homoskedasticity comes in</strong>. Skedasticity refers to the correlation in the variance of the error term, with respect to the x variable. Homoskedastic means that the variance of the error term is the same for all values of x which would be equaivalent to <span class="math notranslate nohighlight">\(x'\epsilon = 0\)</span>. Whereas heteroskedasticity means that the variance of the error term is correlated with x, making <span class="math notranslate nohighlight">\(x'\epsilon \neq 0\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Set seed for reproducibility</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Number of observations</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="c1"># Explanatory/Independent Variable</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Homoskedastic error term</span>
+<span class="n">epsilon_homo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Heteroskedastic error term (error increases with x)</span>
+<span class="n">epsilon_hetero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># Multiply by abs(x) for heteroskedasticity</span>
+
+<span class="c1"># Parameters for the linear model</span>
+<span class="n">beta0</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># Intercept parameter</span>
+<span class="n">beta1</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Slope Parameter</span>
+
+<span class="c1"># Linear model for homoskedastic errors</span>
+<span class="n">y_homo</span> <span class="o">=</span> <span class="n">beta0</span> <span class="o">+</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">epsilon_homo</span>
+
+<span class="c1"># Linear model for heteroskedastic errors</span>
+<span class="n">y_hetero</span> <span class="o">=</span> <span class="n">beta0</span> <span class="o">+</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">epsilon_hetero</span>
+
+<span class="c1"># Data frames</span>
+<span class="n">df_homo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y_homo</span><span class="p">})</span>
+<span class="n">df_hetero</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y_hetero</span><span class="p">})</span>
+
+<span class="c1"># Create subplots (for side-by-side plots)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1"># 1 row, 2 columns, adjust figsize as needed</span>
+
+<span class="c1"># Plot for homoskedastic errors</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_homo</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">df_homo</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Homoskedastic Errors&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot for heteroskedastic errors</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_hetero</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">df_hetero</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Heteroskedastic Errors&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># Display the plots</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span> <span class="c1"># Prevents labels from overlapping</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/202176ffa4650f1db56f4b7353fa4b54bd09b9a1090a1a76d096ab4d9ac1f00c.png" src="../_images/202176ffa4650f1db56f4b7353fa4b54bd09b9a1090a1a76d096ab4d9ac1f00c.png" />
+</div>
+</div>
+</section>
+<section id="error-terms-are-distributed-normally">
+<h2>Error terms are distributed normally<a class="headerlink" href="#error-terms-are-distributed-normally" title="Link to this heading">#</a></h2>
+<p>In OLS, we can go back to our statistics. We have a null hypothesis, which we need to reject or fail to reject. In doing this, we often have our null hypothesis that something has no effect. Then we see the mean <span class="math notranslate nohighlight">\(\hat{\beta}\)</span>. Then we construct a 95% Confidence Interval, where we essentially say we know the true population mean <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> is somewhere in that range.This is what we are doing in OLS, we are essentially finding the mean correlation in variances, and see if the point estimate is statistically significant from zero. For these tests to be meaningful, we need the error terms to be distributed normally.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>statsmodels
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+
+<span class="c1"># Set seed for reproducibility</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Number of observations</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="c1"># Explanatory/Independent Variable</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Error term (increased standard deviation)</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># Increased standard deviation</span>
+
+<span class="c1"># Parameters for the linear model</span>
+<span class="n">beta0</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># Intercept parameter</span>
+<span class="n">beta1</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Slope Parameter</span>
+
+<span class="c1"># Linear model</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">beta0</span> <span class="o">+</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">epsilon</span>
+
+<span class="c1"># Create a DataFrame (required for statsmodels)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">})</span>
+
+<span class="c1"># Fit the linear model (using statsmodels.formula.api, which is similar to R&#39;s lm)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;y ~ x&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># &#39;y ~ x&#39; is the formula, like in R</span>
+
+<span class="c1"># Get the confidence intervals</span>
+<span class="n">conf_intervals</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span>
+
+<span class="c1"># Extract the estimated coefficients and confidence intervals (into a DataFrame)</span>
+<span class="n">estimates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;term&#39;</span><span class="p">:</span> <span class="n">conf_intervals</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="s1">&#39;estimate&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+    <span class="s1">&#39;conf.low&#39;</span><span class="p">:</span> <span class="n">conf_intervals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># Lower bound</span>
+    <span class="s1">&#39;conf.high&#39;</span><span class="p">:</span> <span class="n">conf_intervals</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Upper bound</span>
+<span class="p">})</span>
+
+<span class="c1"># Plot the confidence intervals</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Plot the points (estimates)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">estimates</span><span class="p">[</span><span class="s1">&#39;term&#39;</span><span class="p">],</span> <span class="n">estimates</span><span class="p">[</span><span class="s1">&#39;estimate&#39;</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span> <span class="c1"># C0 is the default blue</span>
+
+<span class="c1"># Plot the error bars (confidence intervals)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">estimates</span><span class="p">[</span><span class="s1">&#39;term&#39;</span><span class="p">],</span> <span class="n">estimates</span><span class="p">[</span><span class="s1">&#39;estimate&#39;</span><span class="p">],</span>
+            <span class="n">yerr</span><span class="o">=</span><span class="p">[</span><span class="n">estimates</span><span class="p">[</span><span class="s1">&#39;estimate&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">estimates</span><span class="p">[</span><span class="s1">&#39;conf.low&#39;</span><span class="p">],</span>
+                  <span class="n">estimates</span><span class="p">[</span><span class="s1">&#39;conf.high&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">estimates</span><span class="p">[</span><span class="s1">&#39;estimate&#39;</span><span class="p">]],</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span>  <span class="c1"># Don&#39;t plot points again</span>
+            <span class="n">ecolor</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span>  <span class="c1"># Use the same color as the points</span>
+            <span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>    <span class="c1"># Add caps to the error bars</span>
+            <span class="n">elinewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Add a horizontal line at y=0</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add labels and title</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Coefficient&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Estimate&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;95% Confidence Intervals for Coefficients&quot;</span><span class="p">)</span>
+
+<span class="c1"># Remove grid lines</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Add text labels for estimate, lower and upper bounds (using a loop)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">estimates</span><span class="p">)):</span>
+    <span class="n">term</span> <span class="o">=</span> <span class="n">estimates</span><span class="p">[</span><span class="s1">&#39;term&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># Access by label using.iloc</span>
+    <span class="n">estimate</span> <span class="o">=</span> <span class="n">estimates</span><span class="p">[</span><span class="s1">&#39;estimate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">conf_low</span> <span class="o">=</span> <span class="n">estimates</span><span class="p">[</span><span class="s1">&#39;conf.low&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">conf_high</span> <span class="o">=</span> <span class="n">estimates</span><span class="p">[</span><span class="s1">&#39;conf.high&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">estimate</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">estimate</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">conf_low</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">conf_low</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">conf_high</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">conf_high</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a970993175cc5321d3a666171466a2dd0105fa3daa59190bc51dcbf5906a61d2.png" src="../_images/a970993175cc5321d3a666171466a2dd0105fa3daa59190bc51dcbf5906a61d2.png" />
+</div>
+</div>
+</section>
+<section id="remaining">
+<h2>Remaining<a class="headerlink" href="#remaining" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Constant term is average, the common variance and whatever is not included in regression and is not collinear with a regressor.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">R&amp;A Landing Page</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="logistic_regression.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Logistic Regression</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deriving-ols">Deriving OLS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-multiplication">Matrix multiplication</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensions-of-matrices-in-matrix-multiplication">Dimensions of Matrices in Matrix Multiplication</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inverse-rules">Inverse Rules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-processes">Stochastic processes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-terms-are-distributed-normally">Error terms are distributed normally</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#remaining">Remaining</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1391 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Logistic Regression &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/logistic_regression';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Project X: We Can Document Projects as Web Pages" href="../projects/project1_overview.html" />
+    <link rel="prev" title="Assumptions in OLS" href="ols_derivation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">My sample book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    R&A Landing Page
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lectures</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="ols_derivation.html">Assumptions in OLS</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Logistic Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../projects/project1_overview.html">Project X: We Can Document Projects as Web Pages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Paper Discussions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../papers/bert_discussion.html">Discussion: BERT - Pre-training of Deep Bidirectional Transformers for Language Understanding</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/dwh3/LetsMachineLearn" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/dwh3/LetsMachineLearn/issues/new?title=Issue%20on%20page%20%2Flectures/logistic_regression.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/logistic_regression.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Logistic Regression</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression">Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-it">What is it?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#limitation">Limitation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logit-derivation">Logit Derivation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odds">Odds</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-odds">Log Odds</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-coefficients">Interpreting coefficients</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-probability">Predicting probability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-the-predicted-probability">Properties of the predicted probability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benefits">Benefits</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-cases">Use cases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="logistic-regression">
+<h1>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Link to this heading">#</a></h1>
+<section id="linear-regression">
+<h2>Linear Regression<a class="headerlink" href="#linear-regression" title="Link to this heading">#</a></h2>
+<section id="what-is-it">
+<h3>What is it?<a class="headerlink" href="#what-is-it" title="Link to this heading">#</a></h3>
+<p>Models <span class="math notranslate nohighlight">\(y\)</span> as a linear function of <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>matplotlib
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>pandas
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>statsmodels
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>  <span class="c1"># For the regression line</span>
+
+<span class="c1"># Set seed for reproducibility</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># number of observations</span>
+
+<span class="c1"># Generate random heights (in inches)</span>
+<span class="n">heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">66</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Generate weights (in pounds) with a linear relationship to height</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># Error term</span>
+<span class="n">beta0</span> <span class="o">=</span> <span class="o">-</span><span class="mi">120</span>  <span class="c1"># Intercept parameter (base weight)  Note:  Often needs adjustment</span>
+<span class="n">beta1</span> <span class="o">=</span> <span class="mf">4.5</span>  <span class="c1"># Slope parameter (weight per inch)   Note:  Often needs adjustment</span>
+
+<span class="n">weights</span> <span class="o">=</span> <span class="n">beta0</span> <span class="o">+</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">heights</span> <span class="o">+</span> <span class="n">epsilon</span>
+
+<span class="c1"># Create data frame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Height&#39;</span><span class="p">:</span> <span class="n">heights</span><span class="p">,</span> <span class="s1">&#39;Weight&#39;</span><span class="p">:</span> <span class="n">weights</span><span class="p">})</span>
+
+<span class="c1"># --- Plotting ---</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Scatter plot of the data</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>  <span class="c1"># Adjust &#39;s&#39; for point size</span>
+
+<span class="c1"># Add regression line (using statsmodels for a clean fit)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;Weight ~ Height&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">],</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="c1"># Add labels and title</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Height (inches)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Weight (pounds)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Height vs Weight&quot;</span><span class="p">)</span>
+
+<span class="c1"># Customize appearance (optional, but good practice)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>  <span class="c1"># Add a subtle grid</span>
+<span class="c1"># ax.set_facecolor(&#39;#f0f0f0&#39;) # Optional: Light gray background</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># --- Alternative Plotting (using Seaborn, even simpler) ---</span>
+<span class="c1"># import seaborn as sns</span>
+<span class="c1"># sns.regplot(x=&#39;Height&#39;, y=&#39;Weight&#39;, data=df, ci=None, scatter_kws={&#39;alpha&#39;:0.6}, line_kws={&#39;color&#39;:&#39;blue&#39;})</span>
+<span class="c1"># plt.show()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b9ae31bc691c2d7c0a14c676cd7256d48ebaf5b9cfbf852460e1e03c1d3bbf60.png" src="../_images/b9ae31bc691c2d7c0a14c676cd7256d48ebaf5b9cfbf852460e1e03c1d3bbf60.png" />
+</div>
+</div>
+</section>
+<section id="limitation">
+<h3>Limitation<a class="headerlink" href="#limitation" title="Link to this heading">#</a></h3>
+<p>But we didn’t impose a restriction on the values that <span class="math notranslate nohighlight">\(y\)</span> can take, meaning it can range from <span class="math notranslate nohighlight">\(- \infty\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span>. But the answer to some questions cannot take just any value.</p>
+<p>For example, we can try to predict the probability of something, such as if a person is obese.</p>
+<div class="math notranslate nohighlight">
+\[P(obese=1 | X)=\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+
+<span class="c1"># Set seed for reproducibility</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># number of observations</span>
+
+<span class="c1"># Generate random weights (in pounds)</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Generate binary obesity status (1 for obese, 0 for not obese)</span>
+<span class="n">obesity_threshold</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="c1"># Logistic function for probability of obesity</span>
+<span class="n">prob_obese</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">weights</span> <span class="o">-</span> <span class="n">obesity_threshold</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">obesity_status</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">prob_obese</span><span class="p">)</span> <span class="c1"># n=1, size= prob_obese</span>
+
+<span class="c1"># Create data frame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Weight&#39;</span><span class="p">:</span> <span class="n">weights</span><span class="p">,</span> <span class="s1">&#39;Obese&#39;</span><span class="p">:</span> <span class="n">obesity_status</span><span class="p">})</span>
+
+<span class="c1"># Fit a linear regression model</span>
+<span class="n">lm_model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;Obese ~ Weight&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Predicted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lm_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># --- Plotting ---</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Scatter plot with jitter (using numpy for jitter)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Obese&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">),</span>  <span class="c1"># Add jitter</span>
+           <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># Add the *linear* regression line (from statsmodels)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Predicted&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="c1"># Add labels and title</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Weight (pounds)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Obesity Status (1 = Obese, 0 = Not Obese)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Weight vs Obesity Status with Linear Regression&quot;</span><span class="p">)</span>
+
+<span class="c1"># Extend y-axis limits</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+
+<span class="c1"># Customize appearance (optional)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1"># --- Alternative with Seaborn (for comparison) ---</span>
+<span class="c1"># import seaborn as sns</span>
+<span class="c1"># fig, ax = plt.subplots(figsize=(8,6))</span>
+<span class="c1"># sns.regplot(x=&#39;Weight&#39;, y=&#39;Obese&#39;, data=df, ci=None,</span>
+<span class="c1">#             scatter_kws={&#39;alpha&#39;:0.6, &#39;s&#39;:20,  &#39;y_jitter&#39;:0.05},</span>
+<span class="c1">#             line_kws={&#39;color&#39;:&#39;red&#39;},</span>
+<span class="c1">#             logistic=False, #  Important:  Keep this as FALSE for *linear* regression.</span>
+<span class="c1">#             ax=ax) #Pass the axis object.</span>
+<span class="c1"># ax.set_ylim(-0.5, 1.5)</span>
+<span class="c1"># plt.show()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5d9dee0145de6011f444047d936fa4c15ea806458a3221db688b21d6c5c7fc7b.png" src="../_images/5d9dee0145de6011f444047d936fa4c15ea806458a3221db688b21d6c5c7fc7b.png" />
+</div>
+</div>
+<p>So what is the problem here? Well a linear regression could give a predicted probability less than 0, or greater than 1, which does not make any sense. What would make more sense then? Well something that keeps the bounds between 0 and 1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+
+<span class="c1"># Set seed for reproducibility</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># number of observations</span>
+
+<span class="c1"># Generate random weights (in pounds)</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Generate binary obesity status (1 for obese, 0 for not obese)</span>
+<span class="n">obesity_threshold</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="c1"># Logistic function for probability of obesity</span>
+<span class="n">prob_obese</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">weights</span> <span class="o">-</span> <span class="n">obesity_threshold</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">obesity_status</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">prob_obese</span><span class="p">)</span>
+
+<span class="c1"># Create data frame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Weight&#39;</span><span class="p">:</span> <span class="n">weights</span><span class="p">,</span> <span class="s1">&#39;Obese&#39;</span><span class="p">:</span> <span class="n">obesity_status</span><span class="p">})</span>
+
+<span class="c1"># Fit a *logistic* regression model (using statsmodels.formula.api)</span>
+<span class="n">logit_model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">logit</span><span class="p">(</span><span class="s2">&quot;Obese ~ Weight&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>  <span class="c1"># Use sm.logit, not sm.ols</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Predicted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">logit_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>  <span class="c1"># Get predicted probabilities</span>
+
+<span class="c1"># --- Plotting ---</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Scatter plot with jitter</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Obese&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">),</span>
+           <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># Add the *logistic* regression curve (using the predicted probabilities)</span>
+<span class="c1"># Sort the x-values for a smooth curve</span>
+<span class="n">df_sorted</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Weight&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_sorted</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">],</span> <span class="n">df_sorted</span><span class="p">[</span><span class="s1">&#39;Predicted&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="c1"># Add labels and title</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Weight (pounds)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Obesity Status (1 = Obese, 0 = Not Obese)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Weight vs Obesity Status with Logistic Regression&quot;</span><span class="p">)</span>
+
+<span class="c1"># Extend y-axis limits (optional, but good for showing probabilities)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>  <span class="c1"># Show the full 0-1 probability range</span>
+
+<span class="c1"># Customize appearance (optional)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1"># --- Alternative Plotting (using Seaborn) ---</span>
+<span class="c1"># import seaborn as sns</span>
+<span class="c1"># fig, ax = plt.subplots(figsize = (8,6))</span>
+<span class="c1"># sns.regplot(x=&#39;Weight&#39;, y=&#39;Obese&#39;, data=df, ci=None,</span>
+<span class="c1">#             scatter_kws={&#39;alpha&#39;:0.6, &#39;s&#39;:20, &#39;y_jitter&#39;:0.05},</span>
+<span class="c1">#             line_kws={&#39;color&#39;:&#39;blue&#39;},</span>
+<span class="c1">#             logistic=True, #  *Important*: Set logistic=True for logistic regression.</span>
+<span class="c1">#             ax=ax)</span>
+<span class="c1"># ax.set_ylim(-0.1, 1.1)</span>
+<span class="c1"># plt.show()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.185784
+         Iterations 9
+</pre></div>
+</div>
+<img alt="../_images/ca86a5314a608eead3d318222353e192879daa30842fa0b0d5d6ab6b0abca6c7.png" src="../_images/ca86a5314a608eead3d318222353e192879daa30842fa0b0d5d6ab6b0abca6c7.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="logit-derivation">
+<h2>Logit Derivation<a class="headerlink" href="#logit-derivation" title="Link to this heading">#</a></h2>
+<p>So what would we rather have happen. Well what we really want is:</p>
+<ul class="simple">
+<li><p>To predict how a change in <span class="math notranslate nohighlight">\(x\)</span> causes a change in the probability that <span class="math notranslate nohighlight">\(y=1\)</span>.</p></li>
+<li><p>To ensure that even if we do not restrict what values <span class="math notranslate nohighlight">\(x\)</span> can take, we have values of <span class="math notranslate nohighlight">\(y\)</span> that are possible.</p></li>
+</ul>
+<p>Well even if the probability of y is limited between 0 and 1, we can look at a function of the probability, and this function would not have the same limits, meaning it could range from <span class="math notranslate nohighlight">\(- \infty\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> as we had before.</p>
+<div class="math notranslate nohighlight">
+\[f(P(obese=1 | X))=\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon\]</div>
+<section id="odds">
+<h3>Odds<a class="headerlink" href="#odds" title="Link to this heading">#</a></h3>
+<p>So instead of looking at the probability, let’s see what is known as the <strong>odds</strong>, which is defined at the probability of something happening, divided by the probability of it not happening:</p>
+<div class="math notranslate nohighlight">
+\[\frac{P(y=1)}{P(y=0)}\]</div>
+<p>And if there are only two outcomes, is the same as:</p>
+<div class="math notranslate nohighlight">
+\[\frac{P(y=1)}{1-P(y=1)}\]</div>
+<p>So if <span class="math notranslate nohighlight">\(P(y=1)=0.75\)</span>, then <span class="math notranslate nohighlight">\(P(y=0)=1-P(y=1)=1-0.75=025\)</span>, then the odds are $<span class="math notranslate nohighlight">\(\frac{P(y=1)}{1-P(y=1)}=\frac{0.75}{0.25}=1\)</span>$</p>
+<p>Or we would say the odds are three to one (3:1).</p>
+<p>So what happens at the extremes? Well, let’s consider the case where the probability is essentially 1, let’s say that Mike Tyson would beat me in a fight, well then the odds are:</p>
+<div class="math notranslate nohighlight">
+\[\frac{P(y=1)}{1-P(y=1)}\]</div>
+<div class="math notranslate nohighlight">
+\[\lim_{P(y=1) \to 1} \frac{P(y=1)}{1 - P(y=1)}=\frac{1}{0}=\infty\]</div>
+<p>And on the converse, if we consider something that will not happen, such as the sun exploding today, then the odds are:</p>
+<div class="math notranslate nohighlight">
+\[\lim_{P(y=1) \to 0} \frac{P(y=1)}{1 - P(y=1)}=\frac{0}{1}=0\]</div>
+<p>This means that regardless of the range of x, the range of the odds are brounded by 0 and infinity. This is a step in the right direction, since it removed the upper bound of 1.</p>
+</section>
+<section id="log-odds">
+<h3>Log Odds<a class="headerlink" href="#log-odds" title="Link to this heading">#</a></h3>
+<p>So since that removed the upper bound, we want a function of this which removes the lower bound. Well thankfully we have a well known function known as the log. This has two interesting properties.</p>
+<div class="math notranslate nohighlight">
+\[log(0)=-\infty\]</div>
+<p>And</p>
+<div class="math notranslate nohighlight">
+\[log(\infty )=\infty\]</div>
+<p>Which means that if we take the log of our odds, this function now has no bounds:</p>
+<div class="math notranslate nohighlight">
+\[\lim_{P(y=1) \to 1} log(\frac{P(y=1)}{1 - P(y=1)})=\infty\]</div>
+<p>And</p>
+<div class="math notranslate nohighlight">
+\[\lim_{P(y=1) \to 0} log(\frac{P(y=1)}{1 - P(y=1)})=-\infty\]</div>
+<p>That means that since we run into problems with estimating the following, because of the constraints of y:</p>
+<div class="math notranslate nohighlight">
+\[P(y=1 | X)=\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon\]</div>
+<p>We can instead remove these constraints and instead estimate:</p>
+<div class="math notranslate nohighlight">
+\[log(\frac{P(y=1)}{1 - P(y=1)})=\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon\]</div>
+<p><strong>This is what is known as the logistic regression model.</strong> Specifically the logit model.</p>
+<p>While this is the functional form, the <strong>estimation is done with Maximum Liklihood Estimation</strong>, and the derivation of that is fairly involved, and we probably do not want to go through that, so we can assume the statistical software does that estimation correctly. But given that, we can look at how we can interpret those coefficients.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create visualization here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="interpreting-coefficients">
+<h2>Interpreting coefficients<a class="headerlink" href="#interpreting-coefficients" title="Link to this heading">#</a></h2>
+<p>In our linear regressions before, the interpretation of the regression coefficient would mean that one change in variable X, would result in a <span class="math notranslate nohighlight">\(\beta\)</span> change in y. Or in the following, we would expect someone to gain 2.5 pounds for each inch of height.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>  <span class="c1"># For the regression line</span>
+
+<span class="c1"># Set seed for reproducibility</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># number of observations</span>
+
+<span class="c1"># Generate random heights (in inches)</span>
+<span class="n">heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">66</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Generate weights (in pounds) with a linear relationship to height</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># Error term</span>
+<span class="n">beta0</span> <span class="o">=</span> <span class="o">-</span><span class="mi">120</span>  <span class="c1"># Intercept parameter (base weight)  Note:  Often needs adjustment</span>
+<span class="n">beta1</span> <span class="o">=</span> <span class="mf">4.5</span>  <span class="c1"># Slope parameter (weight per inch)   Note:  Often needs adjustment</span>
+
+<span class="n">weights</span> <span class="o">=</span> <span class="n">beta0</span> <span class="o">+</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">heights</span> <span class="o">+</span> <span class="n">epsilon</span>
+
+<span class="c1"># Create data frame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Height&#39;</span><span class="p">:</span> <span class="n">heights</span><span class="p">,</span> <span class="s1">&#39;Weight&#39;</span><span class="p">:</span> <span class="n">weights</span><span class="p">})</span>
+
+<span class="c1"># --- Plotting ---</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Scatter plot of the data</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>  <span class="c1"># Adjust &#39;s&#39; for point size</span>
+
+<span class="c1"># Add regression line (using statsmodels for a clean fit)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;Weight ~ Height&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">],</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="c1"># Add labels and title</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Height (inches)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Weight (pounds)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Height vs Weight&quot;</span><span class="p">)</span>
+
+<span class="c1"># Customize appearance (optional, but good practice)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>  <span class="c1"># Add a subtle grid</span>
+<span class="c1"># ax.set_facecolor(&#39;#f0f0f0&#39;) # Optional: Light gray background</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># --- Alternative Plotting (using Seaborn, even simpler) ---</span>
+<span class="c1"># import seaborn as sns</span>
+<span class="c1"># sns.regplot(x=&#39;Height&#39;, y=&#39;Weight&#39;, data=df, ci=None, scatter_kws={&#39;alpha&#39;:0.6}, line_kws={&#39;color&#39;:&#39;blue&#39;})</span>
+<span class="c1"># plt.show()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b9ae31bc691c2d7c0a14c676cd7256d48ebaf5b9cfbf852460e1e03c1d3bbf60.png" src="../_images/b9ae31bc691c2d7c0a14c676cd7256d48ebaf5b9cfbf852460e1e03c1d3bbf60.png" />
+</div>
+</div>
+<p>But what would the interpretation be here? Well a 1 unit change in x would be associated with a <span class="math notranslate nohighlight">\(\beta\)</span> change in the log odds. This is kind of unnecessary to understand more than this, but a good rule of thumb is:</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(\beta\)</span> is positive,</p>
+<ul>
+<li><p>when <span class="math notranslate nohighlight">\(x \uparrow\)</span> then <span class="math notranslate nohighlight">\(P(y=1) \uparrow\)</span></p></li>
+<li><p>when <span class="math notranslate nohighlight">\(x \downarrow\)</span> then <span class="math notranslate nohighlight">\(P(y=1) \downarrow\)</span></p></li>
+</ul>
+</li>
+<li><p>If <span class="math notranslate nohighlight">\(\beta\)</span> is negative,</p>
+<ul>
+<li><p>when <span class="math notranslate nohighlight">\(x \uparrow\)</span> then <span class="math notranslate nohighlight">\(P(y=1) \downarrow\)</span></p></li>
+<li><p>when <span class="math notranslate nohighlight">\(x \downarrow\)</span> then <span class="math notranslate nohighlight">\(P(y=1) \uparrow\)</span></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="predicting-probability">
+<h2>Predicting probability<a class="headerlink" href="#predicting-probability" title="Link to this heading">#</a></h2>
+<p>Since the logistic regression is of the form:</p>
+<div class="math notranslate nohighlight">
+\[log(\frac{P(y=1)}{1 - P(y=1)})=\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon\]</div>
+<p>Once we run the logistic regression in whatever software we use, we will get estimates for all <span class="math notranslate nohighlight">\(\beta\)</span>’s. We could then predict the probability of that outcome occuring, given only their observed values. But how?</p>
+<p>This is a little more straight forward than interpreting the coeffiecients themselves.</p>
+<p>If we want the predicted probability, we can do some algebra on our original function, and get:</p>
+<div class="math notranslate nohighlight">
+\[log(\frac{P(y=1)}{1 - P(y=1)})=\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon\]</div>
+<div class="math notranslate nohighlight">
+\[e^{log(\frac{P(y=1)}{1 - P(y=1)})}=e^{\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{P(y=1)}{1 - P(y=1)}=e^{\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon}\]</div>
+<div class="math notranslate nohighlight">
+\[P(y=1)=e^{\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon}(1 - P(y=1))\]</div>
+<div class="math notranslate nohighlight">
+\[P(y=1)=e^{\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon} - P(y=1) \times e^{\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon}\]</div>
+<p>divide both sides by <span class="math notranslate nohighlight">\(P(y=1)\)</span></p>
+<div class="math notranslate nohighlight">
+\[1=\frac{e^{\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon}}{P(y=1)} -e^{\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon}\]</div>
+<div class="math notranslate nohighlight">
+\[1+e^{\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon}=\frac{e^{\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon}}{P(y=1)}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{1+e^{\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon}}{e^{\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots +\epsilon}}=\frac{1}{P(y=1)}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{e^{\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots}}{1+e^{\beta_0+\beta_1 x_1 +\beta_2 x_2 \cdots}}=P(y=1)\]</div>
+</section>
+<section id="properties-of-the-predicted-probability">
+<h2>Properties of the predicted probability<a class="headerlink" href="#properties-of-the-predicted-probability" title="Link to this heading">#</a></h2>
+<p>We can plot the predicted probability as a function of x, as:</p>
+<div class="math notranslate nohighlight">
+\[\frac{e^{x}}{1+e^{x}}=P(y=1)\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Define the logistic (sigmoid) function</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">logistic_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
+
+<span class="c1"># Create a sequence of values from -10 to 10</span>
+<span class="n">x_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mf">10.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># Use arange for floating-point step</span>
+<span class="c1"># Calculate the logistic function for each value</span>
+<span class="n">y_values</span> <span class="o">=</span> <span class="n">logistic_function</span><span class="p">(</span><span class="n">x_values</span><span class="p">)</span>
+
+<span class="c1"># Create a data frame for plotting (optional, but good practice)</span>
+<span class="n">logistic_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x_values</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y_values</span><span class="p">})</span>
+
+<span class="c1"># --- Plotting ---</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Plot the logistic function</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">logistic_df</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">logistic_df</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Add labels and title</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Predicted Probability P(y=1)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Sigmoid Function&quot;</span><span class="p">)</span>
+
+<span class="c1"># Extend y-axis limits slightly</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+
+<span class="c1"># Customize appearance (optional)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Demonstrate the behavior for very low and very high values</span>
+<span class="n">low_value</span> <span class="o">=</span> <span class="o">-</span><span class="mi">100</span>
+<span class="n">high_value</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">low_prob</span> <span class="o">=</span> <span class="n">logistic_function</span><span class="p">(</span><span class="n">low_value</span><span class="p">)</span>
+<span class="n">high_prob</span> <span class="o">=</span> <span class="n">logistic_function</span><span class="p">(</span><span class="n">high_value</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;When the exponent is very low (e.g., </span><span class="si">{</span><span class="n">low_value</span><span class="si">}</span><span class="s2">), the predicted probability is approximately </span><span class="si">{</span><span class="n">low_prob</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># Use f-string for formatting</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;When the exponent is very high (e.g., </span><span class="si">{</span><span class="n">high_value</span><span class="si">}</span><span class="s2">), the predicted probability is approximately </span><span class="si">{</span><span class="n">high_prob</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ffce93e7713d68fcd7ed143d61ec8c44052ded0949e09543970ee72f985302de.png" src="../_images/ffce93e7713d68fcd7ed143d61ec8c44052ded0949e09543970ee72f985302de.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>When the exponent is very low (e.g., -100), the predicted probability is approximately 0.00000000
+When the exponent is very high (e.g., 100), the predicted probability is approximately 1.00000000
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="benefits">
+<h2>Benefits<a class="headerlink" href="#benefits" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Limits range of predicted probability between 0 and 1.</p></li>
+<li><p>Predicted impact of <span class="math notranslate nohighlight">\(x_i\)</span> is conditional on <span class="math notranslate nohighlight">\(x_j\)</span>.</p></li>
+<li><p>Could give classification ranges based on predicted probability.</p></li>
+</ul>
+</section>
+<section id="use-cases">
+<h2>Use cases<a class="headerlink" href="#use-cases" title="Link to this heading">#</a></h2>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
+<p>Let’s manually compute the probability of smoking for (i) all workers, (ii) workers affected by workplace smoking bans, and, (iii) workers not affected by workplace smoking bans.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>  <span class="c1"># For a closer equivalent to AER&#39;s data loading</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load the SmokeBan data (using statsmodels, which includes it)</span>
+<span class="c1">#  AER&#39;s `data(SmokeBan)` loads it into the environment.</span>
+<span class="c1">#  statsmodels makes datasets available via .get_rdataset()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">get_rdataset</span><span class="p">(</span><span class="s2">&quot;SmokeBan&quot;</span><span class="p">,</span> <span class="s2">&quot;AER&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># Handle older statsmodels versions</span>
+    <span class="c1">#   In older statsmodels versions, you load data differently</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">get_rdataset</span><span class="p">(</span><span class="s2">&quot;SmokeBan&quot;</span><span class="p">,</span> <span class="s2">&quot;AER&quot;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+
+
+<span class="c1"># Creating binary version of smoker</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;binarySmoker&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;smoker&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># Probability of smoking of all workers</span>
+<span class="n">pSmokingAll</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;binarySmoker&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># Probability of smoking of workers with ban</span>
+<span class="n">pSmokingBan</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;ban&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;binarySmoker&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># Probability of smoking of workers with no ban</span>
+<span class="n">pSmokingNoBan</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;ban&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;binarySmoker&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+
+<span class="c1"># Create a DataFrame for plotting (like in R)</span>
+<span class="n">pSmoking</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">pSmokingNoBan</span><span class="p">,</span> <span class="n">pSmokingAll</span><span class="p">,</span> <span class="n">pSmokingBan</span><span class="p">],</span>
+    <span class="s1">&#39;ban&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;With No Ban&quot;</span><span class="p">,</span> <span class="s2">&quot;All Workers&quot;</span><span class="p">,</span> <span class="s2">&quot;With Ban&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="c1"># --- Plotting ---</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Bar plot (using matplotlib directly)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">pSmoking</span><span class="p">[</span><span class="s1">&#39;ban&#39;</span><span class="p">],</span> <span class="n">pSmoking</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#1f77b4&quot;</span><span class="p">)</span>  <span class="c1"># Access columns by name</span>
+<span class="c1">#Note, the default matplotlib color is a good choice.</span>
+
+<span class="c1"># Add labels and title</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Ban Status&quot;</span><span class="p">)</span>  <span class="c1"># More descriptive x-label</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Proportion of Smokers&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Smoking Rates by Workplace Ban Status&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># Customize appearance (optional)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>  <span class="c1"># Add a subtle grid</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>       <span class="c1"># Remove top spine</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>     <span class="c1"># Remove right spine</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1"># --- Alternative using Seaborn (more concise)</span>
+<span class="c1"># import seaborn as sns</span>
+<span class="c1"># fig, ax = plt.subplots(figsize=(8, 6))</span>
+<span class="c1"># sns.barplot(x=&#39;ban&#39;, y=&#39;y&#39;, data=pSmoking, ax=ax, order=[&quot;With No Ban&quot;, &quot;All Workers&quot;, &quot;With Ban&quot;], palette=&quot;deep&quot;)</span>
+<span class="c1"># ax.set_xlabel(&quot;Ban Status&quot;)</span>
+<span class="c1"># ax.set_ylabel(&quot;Proportion of Smokers&quot;)</span>
+<span class="c1"># ax.set_title(&quot;Smoking Rates by Workplace Ban Status&quot;)</span>
+<span class="c1"># plt.show()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d3c49d8a9e2450a70dddae670712d8007a21125e4fb5645bd4010158a0ad2e4b.png" src="../_images/d3c49d8a9e2450a70dddae670712d8007a21125e4fb5645bd4010158a0ad2e4b.png" />
+</div>
+</div>
+<p>This suggests approximately a 10 percentage point decrease in the probability of smoking if there is a smoking ban.</p>
+<p>But we can be even more precise with a regression. Here we can even run a linear model and a logit regression.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTML</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.iolib.summary2</span><span class="w"> </span><span class="kn">import</span> <span class="n">summary_col</span>
+
+<span class="c1"># Load the SmokeBan data</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">get_rdataset</span><span class="p">(</span><span class="s2">&quot;SmokeBan&quot;</span><span class="p">,</span> <span class="s2">&quot;AER&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">get_rdataset</span><span class="p">(</span><span class="s2">&quot;SmokeBan&quot;</span><span class="p">,</span> <span class="s2">&quot;AER&quot;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+
+<span class="c1"># Convert &#39;education&#39; to categorical and set &#39;hs drop out&#39; as reference</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;education&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;education&#39;</span><span class="p">])</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;education&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;education&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">reorder_categories</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;hs drop out&#39;</span><span class="p">,</span> <span class="s1">&#39;hs&#39;</span><span class="p">,</span> <span class="s1">&#39;some college&#39;</span><span class="p">,</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span> <span class="s1">&#39;master&#39;</span><span class="p">],</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># Creating binary version of smoker</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;binarySmoker&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;smoker&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># Estimating linear probability model</span>
+<span class="n">linear_model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;binarySmoker ~ ban + age + I(age**2) + education + afam + hispanic + gender&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># Estimating logit model</span>
+<span class="n">logit_model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">logit</span><span class="p">(</span><span class="s2">&quot;binarySmoker ~ ban + age + I(age**2) + education + afam + hispanic + gender&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># --- Dynamically Generate Covariate Labels ---</span>
+<span class="n">variable_labels</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">base_labels</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1">#  Base labels *without* the level</span>
+    <span class="s1">&#39;ban[T.yes]&#39;</span><span class="p">:</span> <span class="s2">&quot;Ban (yes = 1)&quot;</span><span class="p">,</span>  <span class="c1"># Explicitly handle the &#39;ban&#39; variable</span>
+    <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="s2">&quot;Age&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;I(age ** 2)&#39;</span><span class="p">:</span> <span class="s2">&quot;Age^2&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;education&#39;</span><span class="p">:</span> <span class="s2">&quot;Education&quot;</span><span class="p">,</span>  <span class="c1"># Base label for education</span>
+    <span class="s1">&#39;afam[T.yes]&#39;</span><span class="p">:</span> <span class="s2">&quot;African-American (yes = 1)&quot;</span><span class="p">,</span>  <span class="c1"># Explicitly handle afam</span>
+    <span class="s1">&#39;hispanic[T.yes]&#39;</span><span class="p">:</span> <span class="s2">&quot;Hispanic (yes = 1)&quot;</span><span class="p">,</span>  <span class="c1"># Explicitly handle hispanic</span>
+    <span class="s1">&#39;gender[T.female]&#39;</span><span class="p">:</span> <span class="s2">&quot;Gender (Female = 1)&quot;</span>   <span class="c1"># Explicitly handle gender</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>  <span class="c1"># Iterate through *actual* coefficient names</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">base_labels</span><span class="p">:</span>
+        <span class="n">variable_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">base_labels</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;education&#39;</span><span class="p">):</span>
+        <span class="c1"># Extract the education level from the coefficient name</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;education[T.&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="c1"># Construct the label dynamically</span>
+        <span class="n">variable_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Education (</span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s2"> = 1)&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">variable_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="c1">#Keep original in this scenario</span>
+
+<span class="c1"># --- Create the summary table ---</span>
+
+<span class="n">results_table</span> <span class="o">=</span> <span class="n">summary_col</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">linear_model</span><span class="p">,</span> <span class="n">logit_model</span><span class="p">],</span>
+    <span class="n">stars</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">float_format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%0.3f</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="n">model_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Linear&#39;</span><span class="p">,</span> <span class="s1">&#39;Logit&#39;</span><span class="p">],</span>
+    <span class="n">info_dict</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;N&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">nobs</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;R2&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">rsquared</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;rsquared&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">prsquared</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">},</span>
+     <span class="n">regressor_order</span><span class="o">=</span><span class="n">linear_model</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="c1">#Ensure correct order</span>
+    <span class="n">drop_omitted</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># NO MORE MANUAL LABEL REPLACEMENT</span>
+
+<span class="c1"># Display output as HTML</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">results_table</span><span class="o">.</span><span class="n">as_html</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.523400
+         Iterations 6
+</pre></div>
+</div>
+<div class="output text_html"><table class="simpletable">
+<tr>
+              <td></td>               <th>Linear</th>     <th>Logit</th>  
+</tr>
+<tr>
+  <th>Intercept</th>                 <td>0.275***</td>  <td>-1.173***</td>
+</tr>
+<tr>
+  <th></th>                           <td>(0.042)</td>   <td>(0.245)</td> 
+</tr>
+<tr>
+  <th>ban[T.yes]</th>                <td>-0.047***</td> <td>-0.262***</td>
+</tr>
+<tr>
+  <th></th>                           <td>(0.009)</td>   <td>(0.049)</td> 
+</tr>
+<tr>
+  <th>education[T.hs]</th>           <td>-0.090***</td> <td>-0.438***</td>
+</tr>
+<tr>
+  <th></th>                           <td>(0.016)</td>   <td>(0.084)</td> 
+</tr>
+<tr>
+  <th>education[T.some college]</th> <td>-0.158***</td> <td>-0.787***</td>
+</tr>
+<tr>
+  <th></th>                           <td>(0.017)</td>   <td>(0.087)</td> 
+</tr>
+<tr>
+  <th>education[T.college]</th>      <td>-0.278***</td> <td>-1.570***</td>
+</tr>
+<tr>
+  <th></th>                           <td>(0.018)</td>   <td>(0.102)</td> 
+</tr>
+<tr>
+  <th>education[T.master]</th>       <td>-0.323***</td> <td>-2.017***</td>
+</tr>
+<tr>
+  <th></th>                           <td>(0.020)</td>   <td>(0.132)</td> 
+</tr>
+<tr>
+  <th>afam[T.yes]</th>                <td>-0.028*</td>   <td>-0.156*</td> 
+</tr>
+<tr>
+  <th></th>                           <td>(0.016)</td>   <td>(0.090)</td> 
+</tr>
+<tr>
+  <th>hispanic[T.yes]</th>           <td>-0.105***</td> <td>-0.597***</td>
+</tr>
+<tr>
+  <th></th>                           <td>(0.014)</td>   <td>(0.083)</td> 
+</tr>
+<tr>
+  <th>gender[T.male]</th>            <td>0.033***</td>  <td>0.191***</td> 
+</tr>
+<tr>
+  <th></th>                           <td>(0.009)</td>   <td>(0.049)</td> 
+</tr>
+<tr>
+  <th>age</th>                       <td>0.010***</td>  <td>0.060***</td> 
+</tr>
+<tr>
+  <th></th>                           <td>(0.002)</td>   <td>(0.012)</td> 
+</tr>
+<tr>
+  <th>I(age ** 2)</th>               <td>-0.000***</td> <td>-0.001***</td>
+</tr>
+<tr>
+  <th></th>                           <td>(0.000)</td>   <td>(0.000)</td> 
+</tr>
+<tr>
+  <th>R-squared</th>                   <td>0.057</td>       <td></td>     
+</tr>
+<tr>
+  <th>R-squared Adj.</th>              <td>0.056</td>       <td></td>     
+</tr>
+<tr>
+  <th>N</th>                           <td>10000</td>     <td>10000</td>  
+</tr>
+<tr>
+  <th>R2</th>                          <td>0.057</td>     <td>0.055</td>  
+</tr>
+</table><br/>
+Standard errors in parentheses.<br/>
+* p<.1, ** p<.05, ***p<.01</div></div>
+</div>
+<p>Interpretation</p>
+<ul class="simple">
+<li><p>Both models predict that the smoking ban reduces the probability of smoking. And the effect is statistically different than zero.</p></li>
+<li><p>The linear probability model predicts that the reduction in probability of being a smoker caused by the smoking ban is 5 percent.</p></li>
+<li><p>The logit model predicts that the odds of being a smoker relative to not being a smoker are change by a factor of <span class="math notranslate nohighlight">\(e^{\beta}\approx 0.7695\)</span></p></li>
+<li><p>In the linear regression model, the effect is always the same, regardless of the value of the other control variables.</p></li>
+</ul>
+<p>In the logistic model, the effect of the x variable depends on the value of the other control variables. For instance, consider that we have two individuals that are: 30 years old, with a college degree, that is not African-american, and not Hispanic, but one is male and the other is female. Do you think the effect of the ban will be the same for both genders?</p>
+<p>To answer this question we can use the invlogit function to get our predicted probability of smoking for different individuals:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span>
+
+<span class="c1"># Load the SmokeBan data</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">get_rdataset</span><span class="p">(</span><span class="s2">&quot;SmokeBan&quot;</span><span class="p">,</span> <span class="s2">&quot;AER&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">get_rdataset</span><span class="p">(</span><span class="s2">&quot;SmokeBan&quot;</span><span class="p">,</span> <span class="s2">&quot;AER&quot;</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+
+<span class="c1"># Convert &#39;education&#39; to categorical and set &#39;hs drop out&#39; as reference</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;education&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;education&#39;</span><span class="p">])</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;education&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;education&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">reorder_categories</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;hs drop out&#39;</span><span class="p">,</span> <span class="s1">&#39;hs&#39;</span><span class="p">,</span> <span class="s1">&#39;some college&#39;</span><span class="p">,</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span> <span class="s1">&#39;master&#39;</span><span class="p">],</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="c1"># Creating binary version of smoker</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;binarySmoker&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;smoker&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># Estimating logit model  (we need the fitted model from before)</span>
+<span class="n">logit_model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">logit</span><span class="p">(</span><span class="s2">&quot;binarySmoker ~ ban + age + I(age**2) + education + afam + hispanic + gender&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># --- Data for Predictions ---</span>
+
+<span class="c1"># Data for male without ban</span>
+<span class="n">dataMaleNoBan</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;ban&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>          <span class="c1"># no ban</span>
+    <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">],</span>         <span class="c1"># age</span>
+    <span class="s1">&#39;I(age ** 2)&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="o">**</span><span class="mi">2</span><span class="p">],</span>  <span class="c1"># age^2</span>
+    <span class="s1">&#39;education&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;college&#39;</span><span class="p">],</span>  <span class="c1"># college degree (reference is &#39;hs drop out&#39;)</span>
+    <span class="s1">&#39;afam&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>        <span class="c1"># african-american</span>
+    <span class="s1">&#39;hispanic&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>    <span class="c1"># hispanic</span>
+    <span class="s1">&#39;gender&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">]</span>    <span class="c1"># male</span>
+<span class="p">})</span>
+
+<span class="c1"># Data for male with ban</span>
+<span class="n">dataMaleBan</span> <span class="o">=</span> <span class="n">dataMaleNoBan</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1">#  Make a copy to avoid modifying the original</span>
+<span class="n">dataMaleBan</span><span class="p">[</span><span class="s1">&#39;ban&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># Data for female without ban</span>
+<span class="n">dataFemaleNoBan</span> <span class="o">=</span> <span class="n">dataMaleNoBan</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">dataFemaleNoBan</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;female&#39;</span>
+
+<span class="c1"># Data for female with ban</span>
+<span class="n">dataFemaleBan</span> <span class="o">=</span> <span class="n">dataMaleBan</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">dataFemaleBan</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;female&#39;</span>
+
+<span class="c1"># --- Prediction Function (invlogit) ---</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">invlogit</span><span class="p">(</span><span class="n">betas</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Calculates the predicted probability from a logistic regression.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">      betas: A list or array of coefficients (including the intercept).</span>
+<span class="sd">      data:  A Pandas DataFrame with the covariate values.  Must have the</span>
+<span class="sd">             same columns as the data used to fit the model.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">      The predicted probability (a float between 0 and 1).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># Convert the data and betas into the right format for matrix multiplication</span>
+  <span class="n">exog</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1">#Handle categorical variables</span>
+  <span class="c1">#Ensure all columns are accounted for</span>
+  <span class="n">exog</span> <span class="o">=</span> <span class="n">exog</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">logit_model</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Intercept&#39;</span><span class="p">),</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+  <span class="n">linear_combination</span> <span class="o">=</span> <span class="n">betas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">betas</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">exog</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+  <span class="n">pY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">linear_combination</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">linear_combination</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">pY</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Return the scalar probability</span>
+
+
+<span class="c1"># --- Computing Probabilities ---</span>
+
+<span class="n">betas</span> <span class="o">=</span> <span class="n">logit_model</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">values</span>  <span class="c1"># Get the coefficients as a NumPy array</span>
+
+<span class="n">pMaleBan</span> <span class="o">=</span> <span class="n">invlogit</span><span class="p">(</span><span class="n">betas</span><span class="p">,</span> <span class="n">dataMaleBan</span><span class="p">)</span>
+<span class="n">pMaleNoBan</span> <span class="o">=</span> <span class="n">invlogit</span><span class="p">(</span><span class="n">betas</span><span class="p">,</span> <span class="n">dataMaleNoBan</span><span class="p">)</span>
+<span class="n">pFemaleBan</span> <span class="o">=</span> <span class="n">invlogit</span><span class="p">(</span><span class="n">betas</span><span class="p">,</span> <span class="n">dataFemaleBan</span><span class="p">)</span>
+<span class="n">pFemaleNoBan</span> <span class="o">=</span> <span class="n">invlogit</span><span class="p">(</span><span class="n">betas</span><span class="p">,</span> <span class="n">dataFemaleNoBan</span><span class="p">)</span>
+
+<span class="c1"># Calculating changes in probabilities</span>
+<span class="n">effectForMales</span> <span class="o">=</span> <span class="n">pMaleBan</span> <span class="o">-</span> <span class="n">pMaleNoBan</span>
+<span class="n">effectForFemales</span> <span class="o">=</span> <span class="n">pFemaleBan</span> <span class="o">-</span> <span class="n">pFemaleNoBan</span>
+
+<span class="c1"># --- Creating DataFrame for Table Output ---</span>
+
+<span class="n">pData</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;male&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">pMaleBan</span><span class="p">,</span> <span class="n">pMaleNoBan</span><span class="p">,</span> <span class="n">effectForMales</span><span class="p">],</span>
+    <span class="s1">&#39;female&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">pFemaleBan</span><span class="p">,</span> <span class="n">pFemaleNoBan</span><span class="p">,</span> <span class="n">effectForFemales</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="n">pData</span> <span class="o">=</span> <span class="p">(</span><span class="n">pData</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>  <span class="c1"># Convert to percentage and round</span>
+<span class="n">pData</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Ban&quot;</span><span class="p">,</span> <span class="s2">&quot;No Ban&quot;</span><span class="p">,</span> <span class="s2">&quot;Difference&quot;</span><span class="p">]</span>
+
+<span class="c1"># --- Displaying the Table (using Markdown for simplicity) ---</span>
+
+<span class="c1"># Create the Markdown table string</span>
+<span class="n">table_md</span> <span class="o">=</span> <span class="s2">&quot;|               | Male     | Female   |</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="n">table_md</span> <span class="o">+=</span> <span class="s2">&quot;|:--------------|:---------|:---------|</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pData</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="n">table_md</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;| </span><span class="si">{</span><span class="n">row</span><span class="si">}</span><span class="s2">          | </span><span class="si">{</span><span class="n">pData</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;male&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">pData</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;female&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> |</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+<span class="n">footnote</span> <span class="o">=</span> <span class="s2">&quot;Predicted smoking probabilities for an individual that is 30 years old, </span><span class="se">\n</span><span class="s2"> with a college degree, that is not african-american, and not hispanic.&quot;</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="n">table_md</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">footnote</span><span class="p">))</span>
+
+<span class="c1">#Alternative, but more complicated method using to_markdown()</span>
+<span class="c1">#display(Markdown(pData.to_markdown() + &quot;\n\n&quot; + footnote))</span>
+
+<span class="c1"># --- Alternative (using pandas styling for HTML output - more complex)</span>
+<span class="c1">#</span>
+<span class="c1"># styled_#table = pData.style.format(&quot;{:.4f}&quot;).set_#table_styles([</span>
+<span class="c1">#       {&#39;selector&#39;: &#39;th&#39;, &#39;props&#39;: [(&#39;text-align&#39;, &#39;left&#39;)]}, # Left-align headers</span>
+<span class="c1">#     {&#39;selector&#39;: &#39;.row_heading&#39;, &#39;props&#39;: [(&#39;text-align&#39;, &#39;left&#39;)]}, #Left allign index</span>
+<span class="c1">#       {&#39;selector&#39;: &#39;&#39;, &#39;props&#39;: [(&#39;border&#39;, &#39;1px solid black&#39;)]} # Add borders (optional)</span>
+<span class="c1">#   ]).set_caption(footnote)</span>
+<span class="c1"># display(styled_table)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.523400
+         Iterations 6
+</pre></div>
+</div>
+<p>|               | Male     | Female   |
+|:————–|:———|:———|
+| Ban          | 47.2186 | 47.2186 |
+| No Ban          | 47.2186 | 47.2186 |
+| Difference          | 0.0000 | 0.0000 |</p>
+<p>Predicted smoking probabilities for an individual that is 30 years old,
+with a college degree, that is not african-american, and not hispanic.</p>
+</div>
+</div>
+<p>testing commit</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ols_derivation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Assumptions in OLS</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../projects/project1_overview.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Project X: We Can Document Projects as Web Pages</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression">Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-it">What is it?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#limitation">Limitation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logit-derivation">Logit Derivation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odds">Odds</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-odds">Log Odds</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-coefficients">Interpreting coefficients</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-probability">Predicting probability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-the-predicted-probability">Properties of the predicted probability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benefits">Benefits</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-cases">Use cases</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

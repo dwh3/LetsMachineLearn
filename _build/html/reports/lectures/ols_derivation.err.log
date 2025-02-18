@@ -1,0 +1,104 @@
+Traceback (most recent call last):
+  File "C:\Users\david\anaconda3\envs\my-jupyterbook-env\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\david\anaconda3\envs\my-jupyterbook-env\lib\site-packages\nbclient\client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\david\anaconda3\envs\my-jupyterbook-env\lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "C:\Users\david\anaconda3\envs\my-jupyterbook-env\lib\asyncio\base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "C:\Users\david\anaconda3\envs\my-jupyterbook-env\lib\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\david\anaconda3\envs\my-jupyterbook-env\lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\david\anaconda3\envs\my-jupyterbook-env\lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+%matplotlib inline
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Define the data
+x = np.linspace(0, 10, 400)
+slope = 3
+intercept = 0
+y = intercept + slope * x
+
+# Define the points (x1, y1) and (x2, y2)
+x1 = 2
+y1 = slope * x1
+x2 = 4
+y2 = slope * x2
+
+# Create the plot
+fig, ax = plt.subplots()
+ax.plot(x, y, color="orange")
+ax.plot([x1, x2], [y1, y2], 'ro')  # 'ro' for red circles
+ax.plot([x1, x2], [y1, y1], 'r--', alpha=0.5)  # Dashed red line
+ax.plot([x2, x2], [y1, y2], 'r--', alpha=0.5)
+
+# Annotations (using LaTeX for delta)
+ax.text((x1 + x2) / 2, y1 - 1.5, r'$\Delta x$', color="red")
+ax.text(x2 + 0.5, (y1 + y2) / 2, r'$\Delta y$', color="red")
+ax.text(x1, y1, r'$(x_1, y_1)$', ha='right')  # ha='right' for horizontal alignment
+ax.text(x2, y2, r'$(x_2, y_2)$', ha='left')
+
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_title("Slope of a Line")
+ax.set_xlim(0, 10)
+ax.set_ylim(0, slope * 10)
+
+plt.show()
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [1;32mIn[1], line 1[0m
+[1;32m----> 1[0m [43mget_ipython[49m[43m([49m[43m)[49m[38;5;241;43m.[39;49m[43mrun_line_magic[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mmatplotlib[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43minline[39;49m[38;5;124;43m'[39;49m[43m)[49m
+[0;32m      2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mplt[39;00m
+[0;32m      3[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
+
+File [1;32m~\anaconda3\envs\my-jupyterbook-env\lib\site-packages\IPython\core\interactiveshell.py:2414[0m, in [0;36mInteractiveShell.run_line_magic[1;34m(self, magic_name, line, _stack_depth)[0m
+[0;32m   2412[0m     kwargs[[38;5;124m'[39m[38;5;124mlocal_ns[39m[38;5;124m'[39m] [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mget_local_scope(stack_depth)
+[0;32m   2413[0m [38;5;28;01mwith[39;00m [38;5;28mself[39m[38;5;241m.[39mbuiltin_trap:
+[1;32m-> 2414[0m     result [38;5;241m=[39m fn([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+[0;32m   2416[0m [38;5;66;03m# The code below prevents the output from being displayed[39;00m
+[0;32m   2417[0m [38;5;66;03m# when using magics with decodator @output_can_be_silenced[39;00m
+[0;32m   2418[0m [38;5;66;03m# when the last Python token in the expression is a ';'.[39;00m
+[0;32m   2419[0m [38;5;28;01mif[39;00m [38;5;28mgetattr[39m(fn, magic[38;5;241m.[39mMAGIC_OUTPUT_CAN_BE_SILENCED, [38;5;28;01mFalse[39;00m):
+
+File [1;32m~\anaconda3\envs\my-jupyterbook-env\lib\site-packages\IPython\core\magics\pylab.py:99[0m, in [0;36mPylabMagics.matplotlib[1;34m(self, line)[0m
+[0;32m     97[0m     [38;5;28mprint[39m([38;5;124m"[39m[38;5;124mAvailable matplotlib backends: [39m[38;5;132;01m%s[39;00m[38;5;124m"[39m [38;5;241m%[39m backends_list)
+[0;32m     98[0m [38;5;28;01melse[39;00m:
+[1;32m---> 99[0m     gui, backend [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mshell[49m[38;5;241;43m.[39;49m[43menable_matplotlib[49m[43m([49m[43margs[49m[38;5;241;43m.[39;49m[43mgui[49m[38;5;241;43m.[39;49m[43mlower[49m[43m([49m[43m)[49m[43m [49m[38;5;28;43;01mif[39;49;00m[43m [49m[38;5;28;43misinstance[39;49m[43m([49m[43margs[49m[38;5;241;43m.[39;49m[43mgui[49m[43m,[49m[43m [49m[38;5;28;43mstr[39;49m[43m)[49m[43m [49m[38;5;28;43;01melse[39;49;00m[43m [49m[43margs[49m[38;5;241;43m.[39;49m[43mgui[49m[43m)[49m
+[0;32m    100[0m     [38;5;28mself[39m[38;5;241m.[39m_show_matplotlib_backend(args[38;5;241m.[39mgui, backend)
+
+File [1;32m~\anaconda3\envs\my-jupyterbook-env\lib\site-packages\IPython\core\interactiveshell.py:3585[0m, in [0;36mInteractiveShell.enable_matplotlib[1;34m(self, gui)[0m
+[0;32m   3564[0m [38;5;28;01mdef[39;00m[38;5;250m [39m[38;5;21menable_matplotlib[39m([38;5;28mself[39m, gui[38;5;241m=[39m[38;5;28;01mNone[39;00m):
+[0;32m   3565[0m [38;5;250m    [39m[38;5;124;03m"""Enable interactive matplotlib and inline figure support.[39;00m
+[0;32m   3566[0m 
+[0;32m   3567[0m [38;5;124;03m    This takes the following steps:[39;00m
+[1;32m   (...)[0m
+[0;32m   3583[0m [38;5;124;03m        display figures inline.[39;00m
+[0;32m   3584[0m [38;5;124;03m    """[39;00m
+[1;32m-> 3585[0m     [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib_inline[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbackend_inline[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m configure_inline_support
+[0;32m   3587[0m     [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mIPython[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m pylabtools [38;5;28;01mas[39;00m pt
+[0;32m   3588[0m     gui, backend [38;5;241m=[39m pt[38;5;241m.[39mfind_gui_and_backend(gui, [38;5;28mself[39m[38;5;241m.[39mpylab_gui_select)
+
+File [1;32m~\anaconda3\envs\my-jupyterbook-env\lib\site-packages\matplotlib_inline\__init__.py:1[0m
+[1;32m----> 1[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01m.[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m backend_inline, config  [38;5;66;03m# noqa[39;00m
+[0;32m      2[0m __version__ [38;5;241m=[39m [38;5;124m"[39m[38;5;124m0.1.7[39m[38;5;124m"[39m  [38;5;66;03m# noqa[39;00m
+
+File [1;32m~\anaconda3\envs\my-jupyterbook-env\lib\site-packages\matplotlib_inline\backend_inline.py:6[0m
+[0;32m      1[0m [38;5;124;03m"""A matplotlib backend for publishing figures via display_data"""[39;00m
+[0;32m      3[0m [38;5;66;03m# Copyright (c) IPython Development Team.[39;00m
+[0;32m      4[0m [38;5;66;03m# Distributed under the terms of the BSD 3-Clause License.[39;00m
+[1;32m----> 6[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m
+[0;32m      7[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m colors
+[0;32m      8[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbackends[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m backend_agg
+
+[1;31mModuleNotFoundError[0m: No module named 'matplotlib'
+

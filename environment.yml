@@ -1,15 +1,13 @@
-name: my-jupyterbook-env  # Your environment name
+name: my-jupyterbook-env
 channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.9  # Match your desired Python version
-  - jupyter-book  # Start with the essentials
-  # Add other packages *one by one*, testing after each addition
+  - python=3.9
+  - jupyter-book
   - numpy
   - pandas
-  # ... your other dependencies ...
 
-  # Example of how to include pip-installable packages:
+
   - pip:
-    - accessible-pygments  # If a package is ONLY available via pip
+    - accessible-pygments

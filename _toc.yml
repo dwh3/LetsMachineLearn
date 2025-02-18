@@ -1,23 +1,22 @@
 # _toc.yml
 format: jb-book
-root: intro  # Your existing intro.md file
+root: intro
 parts:
   - caption: Lectures
     chapters:
-      - file: lectures/ols_derivation # Added the OLS lecture
+      - file: lectures/ols_derivation
       - file: lectures/logistic_regression
-      # Add more lecture files as you create them
+
   - caption: Projects
     chapters:
-      - file: projects/project1_overview # Overview of your first project
-      # - file: projects/project1_notebook (Optional: Link to a detailed notebook)
-      # Add more project files as you create them
+      - file: projects/project1_overview
+
   - caption: Paper Discussions
     chapters:
       - file: papers/bert_discussion
       - file: papers/attention_is_all_you_need
       - file: papers/gpt3_discussion
-      # Add more paper discussion files, one per paper or group of related papers
-  - caption: Appendix #Nice to have to prevent clutter
+
+  - caption: Appendix
     chapters:
      - file: references
