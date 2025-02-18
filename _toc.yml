@@ -9,11 +9,12 @@ parts:
 
   - caption: Projects
     chapters:
-      - file: projects/project1_overview
+      - file: projects/List_of_Upcoming_Projects
 
   - caption: Paper Discussions
     chapters:
       - file: papers/Paper_Template
+      - file: papers/List_of_Upcoming_Papers
 
   - caption: Appendix
     chapters:
