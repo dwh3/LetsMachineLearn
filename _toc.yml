@@ -17,6 +17,11 @@ parts:
       - file: papers/Paper_Template
       - file: papers/List_of_Upcoming_Papers
 
+
+  - caption: Reference Material
+    chapters:
+     - file: Reference_Material
+     
   - caption: Appendix
     chapters:
      - file: references
