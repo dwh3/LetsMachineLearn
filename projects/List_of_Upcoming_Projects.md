@@ -1,9 +1,12 @@
 # List of Upcoming Projects
 
-## Documenting how to create this website.
 
-## Test to see how this shows up.
+## ML
+- Local LLM chatbot with RAG
+
 
 ## Miscellaneous
 
-### GitHub
+- Re-writing popular STATA packages in Python.
+- Demonstrating SQL pipilines by creating and pulling synthetic data.
+- Documenting how to create this website.
