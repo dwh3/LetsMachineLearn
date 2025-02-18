@@ -1,18 +1,25 @@
 name: Build and Deploy JupyterBook
-
 on:
   push:
     branches:
       - main
 
+# Add these permission settings
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
+    # Add environment configuration
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Setup Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
@@ -21,19 +28,25 @@ jobs:
           python-version: "3.9"
           auto-update-conda: true
           auto-activate-base: false
-
       - name: Verify Installation
         shell: bash -l {0}  # Use login shell for activation
         run: |
           conda activate my-jupyterbook-env
           conda list
           which jupyter-book
-
       - name: Build JupyterBook
         shell: bash -l {0} # Use login shell for activation
         run: |
           conda activate my-jupyterbook-env
           jupyter-book build .
-
+      # Add configuration step for Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      # Add upload step before deployment
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: '_build/html'
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v2
