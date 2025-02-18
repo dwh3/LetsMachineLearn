@@ -2,7 +2,7 @@
 
 **Authors:** Last, First MI ... (YYYY).
 
-**[Link to Where the Paper is Published (this is my current paper for demo purposes)](https://arxiv.org/abs/1810.04805)** 
+**[Link to Where the Paper is Published (this is my current paper for demo purposes)](https://www.nber.org/system/files/working_papers/w32563/w32563.pdf)** 
 
 ## Summary
 
