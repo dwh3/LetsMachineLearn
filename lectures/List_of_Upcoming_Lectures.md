@@ -1,6 +1,11 @@
 # List of Upcoming Lectures
 
 
+* Basics of GitHub
+  * Cloning repos
+  * Adding
+  * Pushing
+  * Etc.
 
 * Data
   * Visualizing data structures 
@@ -9,6 +14,17 @@
 
 * Online resources
   * "Google Cloud Platform (GCP) and Amazon Web Services for the Hobbyist" on Medium.
+  * AWS Free tier
+    * [https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier=&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all](Can sign up here.)
+    * There are tutorials, etc. here.  
+  * Things you can do on each (in lecture notes, note what is done in what and what alternatives are)
+    * NoSQL Database
+    * Serverless Compute
+    * Serverless App Hosting
+    * Serverless API
+    * Stream Processing
+    * File Store
+    * SQL Database
 
 
 
@@ -51,7 +67,7 @@
 
 
 
-- Basics of GitHub
+
 - Add my prior website stuff?
 - Prior lecture material
 - How to create synthetic data. Why to create synthetic data.
