@@ -1,6 +1,7 @@
-# R&A Landing Page
+# Lets Machine Learn
 
-This is a webpage/book to document technical things, projects, and results. There are some demos to show file types that can be used for Jupyter Books, but if you would like any more documentation, that can be found [here](https://jupyterbook.org) .
+
+This is a webpage/book to document my learning process into Economics, ML, and general CS topics. I am posting it for all to see, in case it helps anyone else learn also. This website was created using Jupyter Books ([documentation for that can be found here](https://jupyterbook.org)), in conjunction with GitHub pages.
 
 
 ```{tableofcontents}
