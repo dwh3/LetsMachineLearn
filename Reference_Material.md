@@ -2,6 +2,7 @@
 
 ## Books
 
+* Machine Learning for Causal Inference
 * Artificial Intelligence: A Modern Approach (Third Edition) - Stuart Russell, Peter Norvig
 * Understanding Deep Learning - Simon J.D. Prince
 * Deep Learning - Ian Goodfellow, Yoshua Bengio, Aaron Courville

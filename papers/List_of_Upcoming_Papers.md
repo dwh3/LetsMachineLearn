@@ -45,7 +45,18 @@
    [https://arxiv.org/abs/2112.10752](https://arxiv.org/abs/2112.10752)  
    Advanced text-to-image synthesis with diffusion models, sparking a wave of creative applications.
 
-10. **[Title Placeholder: Recent Advances in [Subfield]]**  
+
+10. **[Title: Adversarial Policies Beat Professional-Level Go AIs]**
+    * Gleave, A., Ritter, S., Lewis, M., & Cantwell, J. (2020)
+    * [https://arxiv.org/abs/1911.12979](https://arxiv.org/abs/1911.12979)
+    * *This paper explores the creation of adversarial policies that can exploit vulnerabilities in professional-level Go AIs. It demonstrates that even highly sophisticated AI systems can be susceptible to targeted attacks, highlighting the importance of robustness and security in AI development.*
+11. **[Title: Self-Rewarding Language Models]**
+    * Hassan, R., Li, W., Pavlick, E., & Lin, J. (2023)
+    * [https://arxiv.org/abs/2310.17651](https://arxiv.org/abs/2310.17651)
+    * *This paper introduced self-rewarding language models. The models can generate their own reward signals without relying on external human annotations or predefined reward functions. This allows for more efficient and scalable training, and has shown promising results in various natural language processing tasks.*
+
+
+12. **[Title Placeholder: Recent Advances in [Subfield]]**  
     *[Authors, Year]*  
     [Link](#)  
     *A placeholder for a recent paper that’s generating buzz in the community. (Replace with an up‑to‑date paper when available.)*

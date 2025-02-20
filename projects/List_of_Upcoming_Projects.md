@@ -19,6 +19,7 @@
 
 ## Miscellaneous
 
+- Workflow to convert Jupyter notebook lecture to a manim video.
 - Re-writing popular STATA packages in Python.
 - Demonstrating SQL pipilines by creating and pulling synthetic data.
 - Documenting how to create this website.
